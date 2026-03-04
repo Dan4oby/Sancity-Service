@@ -50,7 +50,7 @@ if !SUCCESS! equ 1 (
     echo [ОШИБКА] Не удалось загрузить файл ни одним из способов.
 )
 
-del .\download_updater.bat
+rem del .\download_updater.bat
 
 :end
 pause
