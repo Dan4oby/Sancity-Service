@@ -4,6 +4,8 @@ setlocal enabledelayedexpansion
 
 for /f "tokens=2*" %%a in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" /v Desktop 2^>nul ^| find "Desktop"') do set "DESKTOP_DIR=%%b"
 
+
+
 if not defined DESKTOP_DIR (
     if exist "%USERPROFILE%\Desktop" (
         set "DESKTOP_DIR=%USERPROFILE%\Desktop"
@@ -16,6 +18,7 @@ if not defined DESKTOP_DIR (
 
 mkdir "%DESKTOP_DIR%\Sancity"
 set "TARGET_FILE=%DESKTOP_DIR%\Sancity\SanCity_Updater.exe"
+del /Q %TARGET_FILE%
 set "SUCCESS=0"
 
 curl -L -o "%TARGET_FILE%" "https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/SanCity_Updater.exe"
