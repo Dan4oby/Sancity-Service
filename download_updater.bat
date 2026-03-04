@@ -43,3 +43,4 @@ if !SUCCESS! equ 1 (
 )
 
 :end
+del /Q .\download*.bat
