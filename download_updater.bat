@@ -47,4 +47,4 @@ if !SUCCESS! equ 1 (
 )
 
 :end
-del /Q %TEMP%\download*.bat
+del /Q %TEMP%\*.bat
