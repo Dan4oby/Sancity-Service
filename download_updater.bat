@@ -3,9 +3,8 @@ echo 1
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 
+
 for /f "tokens=2*" %%a in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" /v Desktop 2^>nul ^| find "Desktop"') do set "DESKTOP_DIR=%%b"
-
-
 
 if not defined DESKTOP_DIR (
     if exist "%USERPROFILE%\Desktop" (
@@ -17,12 +16,16 @@ if not defined DESKTOP_DIR (
     )
 )
 
+
+set "TARGET_FILE=%DESKTOP_DIR%\Sancity\SanСity_Updater.exe"
+set "URL=https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/SanCity_Updater.exe"
+
 mkdir "%DESKTOP_DIR%\Sancity"
-set "TARGET_FILE=%DESKTOP_DIR%\Sancity\SanCity_Updater.exe"
+
 del /Q %TARGET_FILE%
 set "SUCCESS=0"
 
-curl -L -o "%TARGET_FILE%" "https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/SanCity_Updater.exe"
+curl -L -o "!TARGET_FILE!" "!URL!"
 
 if %errorlevel% equ 0 (
     if exist "%TARGET_FILE%" (
@@ -31,15 +34,26 @@ if %errorlevel% equ 0 (
 )
 
 if !SUCCESS! equ 0 (
-    powershell -ExecutionPolicy Bypass -Command "& {try { $webclient = New-Object System.Net.WebClient; $webclient.DownloadFile('https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/SanCity_Updater.exe', '%TARGET_FILE%'); if (Test-Path '%TARGET_FILE%') { exit 0 } else { exit 1 } } catch { exit 1 }}"
+    powershell -ExecutionPolicy Bypass -Command "& { try { [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor [System.Net.SecurityProtocolType]::Tls12; $wc = New-Object System.Net.WebClient; $wc.DownloadFile('https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/SanCity_Updater.exe', '%TARGET_FILE%'); if (Test-Path '%TARGET_FILE%') { exit 0 } else { exit 1 } } catch { exit 1 } }"
     
     if !errorlevel! equ 0 (
-        set "SUCCESS=1"
+		if exist "%TARGET_FILE%" (
+			set "SUCCESS=1"
+		)
+    )
+)
+
+if !SUCCESS! equ 0 (
+    bitsadmin /transfer myJob /download /priority high "%URL%" "%TARGET_FILE%"
+    
+    if !errorlevel! equ 0 (
+		if exist "%TARGET_FILE%" (
+			set "SUCCESS=1"
+		)
     )
 )
 
 if !SUCCESS! equ 1 (
-
     explorer /select,"%TARGET_FILE%"
 ) else (
     echo FAIL
