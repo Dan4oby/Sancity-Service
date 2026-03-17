@@ -17,7 +17,7 @@ if not defined DESKTOP_DIR (
 )
 
 
-set "TARGET_FILE=%DESKTOP_DIR%\Sancity\Sancity_Updater.exe"
+set "TARGET_FILE=%DESKTOP_DIR%\Sancity\Sancity-Updater.exe"
 set "URL=https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/SanCity_Updater.exe"
 
 mkdir "%DESKTOP_DIR%\Sancity"
