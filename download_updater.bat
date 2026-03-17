@@ -43,6 +43,16 @@ if !SUCCESS! equ 0 (
     )
 )
 
+if !SUCCESS! equ 0 (
+    bitsadmin /transfer myJob /download /priority high "%URL%" "%TARGET_FILE%"
+    
+    if !errorlevel! equ 0 (
+		if exist "%TARGET_FILE%" (
+			set "SUCCESS=1"
+		)
+    )
+)
+
 if !SUCCESS! equ 1 (
     explorer /select,"%TARGET_FILE%"
 ) else (
