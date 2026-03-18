@@ -4,6 +4,10 @@ cd /d ..\dotnet-projects\
 cd Sancity-Updater\
 call .\build.bat
 
+cd ..\..\
+
+cd .\Sancity-Service
+
 git add .
 
 git commit -m "Обновление программ"
