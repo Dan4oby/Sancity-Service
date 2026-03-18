@@ -16,9 +16,26 @@ if not defined DESKTOP_DIR (
     )
 )
 
+set "target_x86=%ProgramFiles(x86)%\1cv8"
+set "count_x86=0"
+set "has_x86=false"
 
-set "TARGET_FILE=%DESKTOP_DIR%\Sancity\Sancity-Updater.exe"
-set "URL=https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/Sancity_Updater.exe"
+if exist "%target_x86%" (
+    for /f %%A in ('dir "%target_x86%" /ad /b 2^>nul ^| find /c /v ""') do set count_x86=%%A
+    if !count_x86! geq 1 (
+        set has_x86=true
+    )
+)
+
+
+if "!has_x86!"=="false" (
+	set "TARGET_FILE=%DESKTOP_DIR%\Sancity\Sancity-Updater-x64.exe"
+	set "URL=https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/Sancity_Updater-x64.exe"
+) else (
+	set "TARGET_FILE=%DESKTOP_DIR%\Sancity\Sancity-Updater-x86.exe"
+	set "URL=https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/Sancity_Updater-x86.exe"
+)
+
 
 mkdir "%DESKTOP_DIR%\Sancity"
 
