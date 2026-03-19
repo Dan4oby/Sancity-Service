@@ -45,7 +45,7 @@ set "SUCCESS=0"
 curl -L -o "!TARGET_FILE!" "!URL!"
 
 if %errorlevel% equ 0 (
-    if exist "%TARGET_FILE%" (
+    if exist "!TARGET_FILE!" (
         set "SUCCESS=1"
     )
 )
@@ -54,7 +54,7 @@ if !SUCCESS! equ 0 (
     powershell -ExecutionPolicy Bypass -Command "& { try { [System.Net.ServicePointManager]::SecurityProtocol = [Enum]::ToObject([Net.SecurityProtocolType], 3072); $wc = New-Object System.Net.WebClient; $wc.DownloadFile('https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/SanCity_Updater.exe', '%TARGET_FILE%'); if (Test-Path '%TARGET_FILE%') { exit 0 } else { exit 1 } } catch { exit 1 } }"
     
     if !errorlevel! equ 0 (
-		if exist "%TARGET_FILE%" (
+		if exist "!TARGET_FILE!" (
 			set "SUCCESS=1"
 		)
     )
@@ -64,7 +64,7 @@ if !SUCCESS! equ 0 (
     bitsadmin /transfer myJob /download /priority high "%URL%" "%TARGET_FILE%"
     
     if !errorlevel! equ 0 (
-		if exist "%TARGET_FILE%" (
+		if exist "!TARGET_FILE!" (
 			set "SUCCESS=1"
 		)
     )
