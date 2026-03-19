@@ -8,10 +8,12 @@ cd ..\..\
 
 cd .\Sancity-Service
 
-git add .
+if exist "SanCity_Backuper.exe" (
+    git add .
 
-git commit -m "Обновление программ"
+    git commit -m "Обновление программ"
 
-git pull origin main --no-rebase
+    git pull origin main --no-rebase
 
-git push origin main
+    git push origin main
+)
