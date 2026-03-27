@@ -22,7 +22,7 @@ set "has_x64=false"
 
 if exist "%target_x64%" (
     for /f %%A in ('dir "%target_x64%" /ad /b 2^>nul ^| find /c /v ""') do set count_x64=%%A
-    if !count_x64! geq 1 (
+    if !count_x64! geq 3 (
         set has_x64=true
     )
 )
