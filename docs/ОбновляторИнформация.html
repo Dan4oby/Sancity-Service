@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ОбновляторИнформация!</title>
+  <style>
+
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">body {font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;max-width: 800px;margin: 2rem auto;padding: 0 1rem;line-height: 1.5;color: #1a1a1a;background: #fafafa;}blockquote {margin: 1rem 0;padding: 0.5rem 1rem;background: #e6f8ff;border-left: 7px solid #44e3e9;border-radius: 0.5rem;color: #000000;}h3 {color: #2563eb;border-bottom: 2px solid #e5e7eb;padding-bottom: 0.5rem;}ol {background: white;padding: 1rem 1rem 1rem 2rem;border-left: 7px solid #f8c773;border-radius: 0.5rem;box-shadow: 0 1px 2px rgba(0,0,0,0.05);margin: 1rem 0;}li {margin: 0.5rem 0;}code {background: #f1f5f9;padding: 0.2rem 0.4rem;border-radius: 0.25rem;font-family: 'SF Mono', Monaco, Consolas, monospace;font-size: 0.9em;}pre {background: #1e1e2f;color: #f8f8f2;padding: 1rem;border-radius: 0.5rem;overflow-x: auto;font-family: 'SF Mono', Monaco, Consolas, monospace;font-size: 0.85rem;line-height: 1.4;margin: 1rem 0;}pre code {background: none;padding: 0;color: inherit;}strong {color: #dc2626;}</style>
+</head>
+<body>
+<h4 id="пароль-обновлятора">Пароль обновлятора</h4>
+<pre><code>_6521</code></pre>
+<h4 id="автоматическая-установка-в-powershell">Автоматическая установка
+в powershell</h4>
+<p>Команда сама создает директорию Sancity на рабочем столе, удаляет
+предыдущую версию и скачивает обновлятор нужной разрядности</p>
+<ol type="1">
+<li><p>ПКМ по пуску → PowerShell / Терминал</p></li>
+<li><p>Либо Win+R → <code>powershell</code> → Enter</p></li>
+<li><p>Вставить команду</p></li>
+</ol>
+<pre><code>[System.Net.ServicePointManager]::SecurityProtocol = [Enum]::ToObject([Net.SecurityProtocolType], 3072); $wc=New-Object Net.WebClient; $wc.DownloadFile(&#39;https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/download_updater.bat&#39;, &quot;$env:TEMP\download_updater.bat&quot;); $c=[System.IO.File]::ReadAllText(&quot;$env:TEMP\download_updater.bat&quot;); [System.IO.File]::WriteAllText(&quot;$env:TEMP\download_updater.bat&quot;, $c, [System.Text.Encoding]::Default); &amp;&quot;$env:TEMP\download_updater.bat&quot;</code></pre>
+<p>Должно работать ВЕЗДЕ:</p>
+<pre><code>bitsadmin /transfer myDownloadJob /download /priority high &quot;https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/download_updater.bat&quot; &quot;$env:TEMP\download_updater.bat&quot;; $c=[System.IO.File]::ReadAllText(&quot;$env:TEMP\download_updater.bat&quot;); [System.IO.File]::WriteAllText(&quot;$env:TEMP\download_updater.bat&quot;, $c, [System.Text.Encoding]::Default); &amp;&quot;$env:TEMP\download_updater.bat&quot;</code></pre>
+<h4 id="прямая-ссылка-не-рекомендуется">Прямая ссылка (не
+рекомендуется)</h4>
+<pre><code>https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/Sancity_Updater-x64.exe</code></pre>
+<pre><code>https://raw.githubusercontent.com/Dan4oby/Sancity-Service/refs/heads/main/Sancity_Updater-x86.exe</code></pre>
+<h2 id="faq">FAQ</h2>
+<blockquote>
+<p>Пользователь не идентифицирован</p>
+</blockquote>
+<p>Неправильные логин или пароль для входа, проверь внимательно</p>
+<blockquote>
+<p>Невозможно выполнение обновления конфигурации в командном режиме</p>
+</blockquote>
+<p>Вероятно, обновляется нетиповая конфигурация - к сожалению, нужно
+обновлять вручную</p>
+<blockquote>
+<p>Файл не содержит доступных обновлений</p>
+</blockquote>
+<p>Обновление старее, либо слишком новое для конфигурации, либо скачана
+вообще другая конфигурация (например, вместо проф - базовая)</p>
+<blockquote>
+<p>компьютер: 1-SRV, пользователь: Остякова Алёна, сеанс: 5, начат:
+21.03.2017 в 17:12:28, приложение: Толстый клиент;</p>
+</blockquote>
+<p>Значит, что в базе работает пользователь - нужно запустить заново,
+заблокировав базу</p>
+</body>
+</html>
